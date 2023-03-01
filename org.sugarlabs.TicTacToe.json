@@ -1,0 +1,67 @@
+{
+    "app-id": "org.sugarlabs.TicTacToe",
+    "base": "org.sugarlabs.BaseApp",
+    "base-version": "22.06",
+    "runtime": "org.gnome.Platform",
+    "runtime-version": "42",
+    "sdk": "org.gnome.Sdk",
+    "separate-locales": false,
+    "command": "sugarapp",
+    "finish-args": [
+        "--socket=x11",
+        "--socket=pulseaudio",
+        "--share=ipc",
+        "--device=dri",
+        "--env=SUGAR_BUNDLE_ID=org.sugarlabs.TicTacToe",
+        "--env=SUGAR_BUNDLE_PATH=/app/share/sugar/activities/TicTacToe.activity"
+    ],
+    "modules": [
+        {
+            "name": "pygame",
+            "buildsystem": "simple",
+            "build-commands": [
+                "pip3 install --no-index --find-links \"file://${PWD}\" --prefix=${FLATPAK_DEST} pygame"
+            ],
+            "sources": [
+                {
+                    "type": "file",
+                    "url": "https://files.pythonhosted.org/packages/06/bf/008bcc00ebe22fcbea016f80566216c0b8e2cfea2bfdbf72664f676069b5/pygame-2.2.0.tar.gz",
+                    "sha256": "c64d06a97dd7fcdb8433c1c846757e9d253a36e49e579daeab090caeb6b2ef31"
+                }
+            ]
+        },
+        {
+            "name": "tic-tac-toe",
+            "buildsystem": "simple",
+            "build-commands": [
+                "python3 setup.py install --prefix=${FLATPAK_DEST} --skip-install-desktop-file --skip-install-mime"
+            ],
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "https://github.com/sugarlabs/tictactoe.git",
+                    "branch": "main",
+                    "commit": "13f5bb760fe5036c6286a186b943bc293c1dc5ad"
+                },
+                {
+                    "type": "patch",
+                    "path": "tictactoe-info.patch"
+                },
+                {
+                    "type": "patch",
+                    "path": "tictactoe-port.patch"
+                }
+            ],
+            "post-install": [
+                "sugarapp-gen-mimetypes activity/activity.info mimetypes",
+                "sugarapp-gen-appdata activity/activity.info appdata",
+                "sugarapp-gen-desktop activity/activity.info desktop --mimetypes mimetypes",
+                "install -D mimetypes /app/share/mime/packages/org.sugarlabs.TicTacToe.xml",
+                "install -D mimetypes /app/share/sugar/activities/TicTacToe.activity/activity/mimetypes.xml",
+                "install -D appdata /app/share/metainfo/org.sugarlabs.TicTacToe.appdata.xml",
+                "install -D desktop /app/share/applications/org.sugarlabs.TicTacToe.desktop",
+                "install -D activity/activity-tictactoe.svg /app/share/icons/hicolor/scalable/apps/org.sugarlabs.TicTacToe.svg"
+            ]
+        }
+    ]
+}
