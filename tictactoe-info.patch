@@ -1,5 +1,5 @@
 diff --git a/activity/activity.info b/activity/activity.info
-index bc84f0d..59709f1 100644
+index bc84f0d..6268bbe 100644
 --- a/activity/activity.info
 +++ b/activity/activity.info
 @@ -2,7 +2,16 @@
@@ -14,7 +14,7 @@ index bc84f0d..59709f1 100644
 +metadata_license = CC0-1.0
 +repository = https://github.com/sugarlabs/tictactoe.git
 +summary = A Simple Tic-Tac-Toe Game
-+description = A Simple Tic-Tac-Toe Game
++description = Each player takes it in turn to place their X or O. To win the game get three of your symbols in a line, horizontally, vertically or diagonally.
 +url = https://github.com/sugarlabs/tictactoe.git
 +tags = Game
 +update_contact = tch@sugarlabs.org

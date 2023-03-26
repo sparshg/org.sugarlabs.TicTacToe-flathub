@@ -1,43 +1,28 @@
 diff --git a/activity.py b/activity.py
-index 44fc6cc..857a13a 100644
+index 44fc6cc..0a372c8 100644
 --- a/activity.py
 +++ b/activity.py
-@@ -20,31 +20,29 @@
- # SOFTWARE.
- #
+@@ -29,12 +29,16 @@ gi.require_version("Gtk", "3.0")
+ from gi.repository import Gtk
+ import pygame
  
-+import main
-+import sugargame.canvas
-+from sugarapp.widgets import SugarCompatibleActivity
-+from sugarapp.widgets import ExtendedActivityToolbarButton
-+from sugar3.activity.widgets import DescriptionItem
-+from sugar3.activity.widgets import StopButton
-+from sugar3.graphics.toolbutton import ToolButton
-+from sugar3.activity.widgets import ActivityToolbarButton
-+from sugar3.graphics.toolbarbox import ToolbarBox
-+from sugar3.activity.activity import Activity
-+import pygame
-+from gi.repository import Gtk
- from gettext import gettext as _
- 
- import sys
- import gi
- 
- gi.require_version("Gtk", "3.0")
--from gi.repository import Gtk
--import pygame
--
 -from sugar3.activity.activity import Activity
--from sugar3.graphics.toolbarbox import ToolbarBox
++from sugarapp.widgets import SugarCompatibleActivity
+ from sugar3.graphics.toolbarbox import ToolbarBox
 -from sugar3.activity.widgets import ActivityToolbarButton
--from sugar3.graphics.toolbutton import ToolButton
--from sugar3.activity.widgets import StopButton
--from sugar3.activity.widgets import DescriptionItem
--
--
--import sugargame.canvas
--
--import main
++from sugarapp.widgets import ExtendedActivityToolbarButton
+ from sugar3.graphics.toolbutton import ToolButton
+ from sugar3.activity.widgets import StopButton
+ from sugar3.activity.widgets import DescriptionItem
++from sugar3.activity.widgets import TitleEntry
++from sugar3.activity.widgets import StopButton
++from sugar3.activity.widgets import ShareButton
++from sugar3.activity.widgets import DescriptionItem
+ 
+ 
+ import sugargame.canvas
+@@ -42,9 +46,9 @@ import sugargame.canvas
+ import main
  
  
 -class TicTacToe(Activity):
@@ -48,12 +33,38 @@ index 44fc6cc..857a13a 100644
  
          self.build_toolbar()
          self.game = main.Main()
-@@ -67,7 +65,7 @@ class TicTacToe(Activity):
-         self.set_toolbar_box(toolbar_box)
-         toolbar_box.show()
+@@ -63,12 +67,12 @@ class TicTacToe(Activity):
+         self._pygamecanvas.grab_focus()
+ 
+     def build_toolbar(self):
++        self.max_participants = 1
++
+         toolbar_box = ToolbarBox()
+-        self.set_toolbar_box(toolbar_box)
+-        toolbar_box.show()
  
 -        activity_button = ActivityToolbarButton(self)
+-        toolbar_box.toolbar.insert(activity_button, -1)
 +        activity_button = ExtendedActivityToolbarButton(self)
-         toolbar_box.toolbar.insert(activity_button, -1)
++        toolbar_box.toolbar.insert(activity_button, 0)
          activity_button.show()
  
+         separator = Gtk.SeparatorToolItem()
+@@ -80,10 +84,16 @@ class TicTacToe(Activity):
+         stop_button = StopButton(self)
+         toolbar_box.toolbar.insert(stop_button, -1)
+         stop_button.show()
+-        self.show_all()
++
++        self.set_toolbar_box(toolbar_box)
++        toolbar_box.show()
+ 
+     def read_file(self, file_path):
+         self.game.read_file(file_path)
+ 
+     def write_file(self, file_path):
+         self.game.write_file(file_path)
++
++    def close(self, **kwargs):
++        self.game.running = False
++        SugarCompatibleActivity.close(self, **kwargs)

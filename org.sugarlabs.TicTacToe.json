@@ -13,7 +13,7 @@
         "--share=ipc",
         "--device=dri",
         "--env=SUGAR_BUNDLE_ID=org.sugarlabs.TicTacToe",
-        "--env=SUGAR_BUNDLE_PATH=/app/share/sugar/activities/TicTacToe.activity"
+        "--env=SUGAR_BUNDLE_PATH=/app/share/sugar/activities/Tic-Tac-Toe.activity"
     ],
     "modules": [
         {
@@ -57,7 +57,7 @@
                 "sugarapp-gen-appdata activity/activity.info appdata",
                 "sugarapp-gen-desktop activity/activity.info desktop --mimetypes mimetypes",
                 "install -D mimetypes /app/share/mime/packages/org.sugarlabs.TicTacToe.xml",
-                "install -D mimetypes /app/share/sugar/activities/TicTacToe.activity/activity/mimetypes.xml",
+                "install -D mimetypes /app/share/sugar/activities/Tic-Tac-Toe.activity/activity/mimetypes.xml",
                 "install -D appdata /app/share/metainfo/org.sugarlabs.TicTacToe.appdata.xml",
                 "install -D desktop /app/share/applications/org.sugarlabs.TicTacToe.desktop",
                 "install -D activity/activity-tictactoe.svg /app/share/icons/hicolor/scalable/apps/org.sugarlabs.TicTacToe.svg"
