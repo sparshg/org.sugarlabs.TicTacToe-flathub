@@ -1,10 +1,10 @@
 diff --git a/activity/activity.info b/activity/activity.info
-index bc84f0d..6268bbe 100644
+index 287bce9..b0b6f98 100644
 --- a/activity/activity.info
 +++ b/activity/activity.info
 @@ -2,7 +2,16 @@
  name = Tic-Tac-Toe
- activity_version = 2
+ activity_version = 3
  bundle_id = org.sugarlabs.TicTacToe
 +release_date = 2020-12-15
  exec = sugar-activity3 activity.TicTacToe
@@ -19,4 +19,4 @@ index bc84f0d..6268bbe 100644
 +tags = Game
 +update_contact = tch@sugarlabs.org
 +developer_name = Sugar Labs Community
-+screenshots = https://raw.githubusercontent.com/sugarlabs/tictactoe/main/help.jpg
++screenshots = https://raw.githubusercontent.com/sugarlabs/tictactoe/main/screenshots/en/1.png

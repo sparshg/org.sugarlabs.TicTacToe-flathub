@@ -1,9 +1,9 @@
 {
     "app-id": "org.sugarlabs.TicTacToe",
     "base": "org.sugarlabs.BaseApp",
-    "base-version": "22.06",
+    "base-version": "23.06",
     "runtime": "org.gnome.Platform",
-    "runtime-version": "42",
+    "runtime-version": "44",
     "sdk": "org.gnome.Sdk",
     "separate-locales": false,
     "command": "sugarapp",
@@ -17,18 +17,40 @@
     ],
     "modules": [
         {
-            "name": "pygame",
-            "buildsystem": "simple",
-            "build-commands": [
-                "pip3 install --no-index --find-links \"file://${PWD}\" --prefix=${FLATPAK_DEST} pygame"
-            ],
+            "name": "pygame2",
             "sources": [
                 {
-                    "type": "file",
-                    "url": "https://files.pythonhosted.org/packages/06/bf/008bcc00ebe22fcbea016f80566216c0b8e2cfea2bfdbf72664f676069b5/pygame-2.2.0.tar.gz",
-                    "sha256": "c64d06a97dd7fcdb8433c1c846757e9d253a36e49e579daeab090caeb6b2ef31"
+                    "type": "archive",
+                    "url": "https://files.pythonhosted.org/packages/b9/42/154038c4988d750ded799dc5d6ca4e631db93888e3d76084625b0588dfd2/pygame-2.4.0.tar.gz",
+                    "sha256": "e3603e70e96ee30af1954ce57d4922a059402f368013e7138e90f1c03d185267",
+                    "x-checker-data": {
+                        "type": "pypi",
+                        "name": "pygame"
+                    }
                 }
-            ]
+            ],
+            "buildsystem": "simple",
+            "build-commands": [
+                "pip3 install --ignore-installed --no-deps --prefix=/app ."
+            ],
+            "build-options": {
+                "env": {
+                    "PORTMIDI_INC_PORTTIME": "1",
+                    "PYGAME_EXTRA_BASE": "/app"
+                },
+                "arch": {
+                    "aarch64": {
+                        "env": {
+                            "ORIGLIBDIRS": "/lib:/lib64:/lib/aarch64-linux-gnu"
+                        }
+                    },
+                    "x86_64": {
+                        "env": {
+                            "ORIGLIBDIRS": "/lib:/lib64:/lib/x86_64-linux-gnu"
+                        }
+                    }
+                }
+            }
         },
         {
             "name": "tic-tac-toe",
@@ -40,16 +62,20 @@
                 {
                     "type": "git",
                     "url": "https://github.com/sugarlabs/tictactoe.git",
-                    "branch": "main",
-                    "commit": "13f5bb760fe5036c6286a186b943bc293c1dc5ad"
-                },
-                {
-                    "type": "patch",
-                    "path": "tictactoe-info.patch"
+                    "tag": "v3",
+                    "commit": "0465c2a6cd0c627f0b22a2190ef3cdbdef3166ed",
+                    "x-checker-data": {
+                        "type": "git",
+                        "tag-pattern": "^v([\\d.]+)$"
+                    }
                 },
                 {
                     "type": "patch",
                     "path": "tictactoe-port.patch"
+                },
+                {
+                    "type": "patch",
+                    "path": "tictactoe-info.patch"
                 }
             ],
             "post-install": [
